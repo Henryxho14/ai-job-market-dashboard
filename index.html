@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bay Area AI Job Market Intelligence Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:       #0f1117;
+    --surface:  #1a1d27;
+    --surface2: #21253a;
+    --border:   rgba(255,255,255,0.07);
+    --border2:  rgba(255,255,255,0.13);
+    --text:     #e8eaf0;
+    --muted:    #7a7f96;
+    --dim:      #4a5070;
+    --blue:     #4f8ef7;
+    --blue-bg:  rgba(79,142,247,0.12);
+    --green:    #34c97b;
+    --green-bg: rgba(52,201,123,0.12);
+    --amber:    #f5a623;
+    --amber-bg: rgba(245,166,35,0.12);
+    --coral:    #f06060;
+    --coral-bg: rgba(240,96,96,0.12);
+    --purple:   #a78bfa;
+    --teal:     #2dd4bf;
+    --radius:   10px;
+    --radius-lg: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Layout ── */
+  .shell { max-width: 1200px; margin: 0 auto; padding: 0 24px 60px; }
+
+  /* ── Header ── */
+  header {
+    padding: 32px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .header-meta {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
+    margin-right: 5px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  /* ── Filter pills ── */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .filter-pill {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    transition: all .15s;
+    font-family: inherit;
+  }
+  .filter-pill:hover { background: var(--surface); color: var(--text); }
+  .filter-pill.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+
+  /* ── Metric cards ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    transition: border-color .15s;
+  }
+  .metric-card:hover { border-color: var(--border2); }
+  .metric-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 8px;
+  }
+  .metric-val {
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-delta {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .delta-up { color: var(--green); }
+  .delta-dn { color: var(--coral); }
+  .delta-neu { color: var(--muted); }
+
+  /* ── Charts row ── */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .card-subtitle {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .leg-sq {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── Skill bars ── */
+  .skill-list { display: flex; flex-direction: column; gap: 9px; }
+  .skill-row { display: flex; align-items: center; gap: 10px; }
+  .skill-label {
+    font-size: 12px;
+    color: var(--muted);
+    width: 130px;
+    flex-shrink: 0;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .skill-track {
+    flex: 1;
+    height: 5px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .skill-pct {
+    font-size: 11px;
+    color: var(--dim);
+    font-family: 'DM Mono', monospace;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* ── Bottom row ── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    table-layout: fixed;
+  }
+  thead th {
+    color: var(--dim);
+    font-weight: 400;
+    padding: 0 0 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  tbody td {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { color: #fff; }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    display: inline-block;
+  }
+  .badge-up   { background: var(--green-bg); color: var(--green); }
+  .badge-dn   { background: var(--coral-bg); color: var(--coral); }
+  .badge-neu  { background: rgba(255,255,255,0.06); color: var(--muted); }
+  .badge-ai   { background: var(--purple); color: #fff; font-size: 9px; padding: 1px 5px; margin-left: 4px; }
+
+  /* ── Bottom row 2: salary + roles ── */
+  .third-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-size: 11px;
+    color: var(--dim);
+    font-family: 'DM Mono', monospace;
+    line-height: 1.8;
+  }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-links a:hover { text-decoration: underline; }
+
+  /* ── Loading state ── */
+  #loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #loading p { color: var(--muted); font-size: 13px; }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #dashboard { display: none; }
+
+  @media (max-width: 700px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .charts-row, .bottom-row, .third-row { grid-template-columns: 1fr; }
+    header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>Loading market data...</p>
+  </div>
+
+  <div id="dashboard">
+    <header>
+      <div class="header-left">
+        <h1>Bay Area AI Job Market Intelligence</h1>
+        <div class="header-meta">
+          <span><span class="live-dot"></span>Live data</span>
+          <span id="meta-range">—</span>
+          <span id="meta-total">—</span>
+          <span>Sources: LinkedIn · Indeed · Glassdoor</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/Henryxho14/ai-job-market-dashboard" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/henryxho14" target="_blank">LinkedIn</a>
+      </div>
+    </header>
+
+    <div class="filters" id="filters">
+      <button class="filter-pill active" data-cat="all">All roles</button>
+      <button class="filter-pill" data-cat="data">Data roles</button>
+      <button class="filter-pill" data-cat="analyst">Analyst roles</button>
+      <button class="filter-pill" data-cat="consulting">Consulting</button>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Postings analyzed</div>
+        <div class="metric-val" id="m-total">—</div>
+        <div class="metric-delta" id="d-total">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Avg. entry salary</div>
+        <div class="metric-val" id="m-salary">—</div>
+        <div class="metric-delta delta-up" id="d-salary">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Mention AI skills</div>
+        <div class="metric-val" id="m-ai">—</div>
+        <div class="metric-delta delta-up" id="d-ai">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Remote / hybrid</div>
+        <div class="metric-val" id="m-remote">—</div>
+        <div class="metric-delta delta-dn" id="d-remote">—</div>
+      </div>
+    </div>
+
+    <!-- Trend + Skills -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="card-title">Skill demand over time</div>
+        <div class="card-subtitle">% of postings mentioning each skill, last 6 months</div>
+        <div class="legend" id="trend-legend"></div>
+        <div style="position:relative;height:220px"><canvas id="trendChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="card-title">Top skills right now</div>
+        <div class="card-subtitle" id="skill-bar-sub">by % of all postings</div>
+        <div class="skill-list" id="skillBars"></div>
+      </div>
+    </div>
+
+    <!-- Company table + Rising skills -->
+    <div class="bottom-row">
+      <div class="table-card">
+        <div class="card-title" style="margin-bottom:4px">Top hiring companies</div>
+        <div class="card-subtitle">by open role volume</div>
+        <table>
+          <thead><tr>
+            <th style="width:38%">Company</th>
+            <th style="width:18%">Roles</th>
+            <th style="width:22%">30d trend</th>
+            <th style="width:22%">Avg. salary</th>
+          </tr></thead>
+          <tbody id="companyTbody"></tbody>
+        </table>
+      </div>
+      <div class="table-card">
+        <div class="card-title" style="margin-bottom:4px">Fastest rising skills</div>
+        <div class="card-subtitle">30-day change in mention frequency</div>
+        <table>
+          <thead><tr>
+            <th style="width:50%">Skill</th>
+            <th style="width:25%">Mentions</th>
+            <th style="width:25%">30d change</th>
+          </tr></thead>
+          <tbody id="risingTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Salary dist + Role dist -->
+    <div class="third-row">
+      <div class="chart-card">
+        <div class="card-title">Salary distribution</div>
+        <div class="card-subtitle">entry-level & mid roles (n = postings with salary listed)</div>
+        <div style="position:relative;height:200px"><canvas id="salaryChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="card-title">Role category breakdown</div>
+        <div class="card-subtitle">share of all postings</div>
+        <div style="display:flex;align-items:center;gap:20px;height:200px">
+          <div style="position:relative;height:180px;width:180px;flex-shrink:0"><canvas id="roleChart"></canvas></div>
+          <div id="roleLegend" style="font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:6px;min-width:0"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-left">
+        <div>Built by Henry Ho · SJSU Management Information Systems · Class of 2026</div>
+        <div id="footer-meta">Data generated: — · 3,847 postings · Python + pandas + Chart.js</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/Henryxho14/ai-job-market-dashboard" target="_blank">View on GitHub</a>
+        <a href="notebooks/01_data_collection.html" target="_blank">Methodology</a>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+const SKILL_COLORS = {
+  "Python":              "#4f8ef7",
+  "SQL":                 "#34c97b",
+  "LLM / GenAI":         "#f5a623",
+  "Tableau":             "#f06060",
+  "Power BI":            "#a78bfa",
+  "Prompt Engineering":  "#2dd4bf",
+  "default":             "#7a7f96",
+};
+
+const ROLE_COLORS = ["#4f8ef7","#34c97b","#f5a623","#a78bfa","#f06060","#2dd4bf","#e879f9","#fb923c"];
+
+let DATA = null;
+let trendChart = null;
+let salaryChart = null;
+let roleChart = null;
+let currentCat = "all";
+
+async function loadData() {
+  try {
+    const res = await fetch("data.json");
+    DATA = await res.json();
+    init();
+  } catch(e) {
+    document.getElementById("loading").innerHTML =
+      "<p style='color:#f06060'>Could not load data.json. Make sure it is in the same folder as index.html.</p>";
+  }
+}
+
+function init() {
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+
+  // Header meta
+  const m = DATA.meta;
+  document.getElementById("meta-range").textContent =
+    `${m.date_range.start} → ${m.date_range.end}`;
+  document.getElementById("meta-total").textContent =
+    `${m.total_postings.toLocaleString()} postings`;
+  document.getElementById("footer-meta").textContent =
+    `Data generated: ${m.generated} · ${m.total_postings.toLocaleString()} postings · Python + pandas + Chart.js`;
+
+  // Trend chart (global, doesn't change with filter)
+  buildTrendChart();
+  buildSalaryChart();
+  buildRoleChart();
+
+  // Filter-sensitive content
+  renderCategory("all");
+
+  // Filter pills
+  document.querySelectorAll(".filter-pill").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderCategory(btn.dataset.cat);
+    });
+  });
+}
+
+function renderCategory(cat) {
+  currentCat = cat;
+  const d = DATA.categories[cat] || DATA.categories["all"];
+
+  // Metrics
+  const base = cat === "all" ? DATA.metrics : null;
+  document.getElementById("m-total").textContent  = d.total.toLocaleString();
+  document.getElementById("m-salary").textContent = `$${d.avg_salary_k}K`;
+  document.getElementById("m-ai").textContent     = `${d.ai_pct}%`;
+  document.getElementById("m-remote").textContent = `${d.remote_pct}%`;
+
+  if (base) {
+    document.getElementById("d-total").className = `metric-delta ${base.posting_change >= 0 ? "delta-up":"delta-dn"}`;
+    document.getElementById("d-total").textContent =
+      `${base.posting_change >= 0 ? "+" : ""}${base.posting_change}% vs last month`;
+    document.getElementById("d-salary").textContent = `+${base.salary_change}% YoY`;
+    document.getElementById("d-ai").textContent     = `+${base.ai_skill_change}% vs 2024`;
+    document.getElementById("d-remote").textContent = `${base.remote_change}% vs peak`;
+  } else {
+    ["d-total","d-salary","d-ai","d-remote"].forEach(id => {
+      document.getElementById(id).textContent = "—";
+      document.getElementById(id).className = "metric-delta delta-neu";
+    });
+  }
+
+  // Skill bars — top 10
+  const bars = document.getElementById("skillBars");
+  bars.innerHTML = "";
+  const top10 = d.skill_freq.slice(0, 10);
+  const maxPct = top10[0]?.pct || 1;
+  top10.forEach(sk => {
+    const color = SKILL_COLORS[sk.skill] || SKILL_COLORS["default"];
+    const isAI = ["LLM / GenAI","Prompt Engineering","RAG / Vector DBs","AI Governance","Machine Learning"].includes(sk.skill);
+    bars.innerHTML += `
+      <div class="skill-row">
+        <div class="skill-label">${sk.skill}${isAI ? '<span class="badge badge-ai">AI</span>' : ''}</div>
+        <div class="skill-track"><div class="skill-fill" style="width:${(sk.pct/maxPct*100).toFixed(1)}%;background:${color}"></div></div>
+        <div class="skill-pct">${sk.pct}%</div>
+      </div>`;
+  });
+
+  // Company table
+  const ctbody = document.getElementById("companyTbody");
+  ctbody.innerHTML = "";
+  DATA.companies.forEach(co => {
+    const cls = co.change_pct > 5 ? "badge-up" : co.change_pct < -3 ? "badge-dn" : "badge-neu";
+    const sign = co.change_pct > 0 ? "+" : "";
+    ctbody.innerHTML += `<tr>
+      <td>${co.company}</td>
+      <td style="font-family:'DM Mono',monospace">${co.total}</td>
+      <td><span class="badge ${cls}">${sign}${co.change_pct.toFixed(0)}%</span></td>
+      <td style="font-family:'DM Mono',monospace">$${co.avg_salary}K</td>
+    </tr>`;
+  });
+
+  // Rising table
+  const rtbody = document.getElementById("risingTbody");
+  rtbody.innerHTML = "";
+  DATA.rising.forEach(sk => {
+    const isAI = ["LLM / GenAI","Prompt Engineering","RAG / Vector DBs","AI Governance","Machine Learning"].includes(sk.skill);
+    const sign = sk.change_pct > 0 ? "+" : "";
+    rtbody.innerHTML += `<tr>
+      <td>${sk.skill}${isAI ? '<span class="badge badge-ai">AI</span>' : ''}</td>
+      <td style="font-family:'DM Mono',monospace">${sk.mentions.toLocaleString()}</td>
+      <td><span class="badge badge-up">${sign}${sk.change_pct.toFixed(0)}%</span></td>
+    </tr>`;
+  });
+}
+
+function buildTrendChart() {
+  const t = DATA.trend;
+  const TREND_SKILLS = ["Python","SQL","LLM / GenAI","Tableau","Power BI","Prompt Engineering"];
+
+  // Legend
+  const leg = document.getElementById("trend-legend");
+  TREND_SKILLS.forEach(sk => {
+    const color = SKILL_COLORS[sk] || SKILL_COLORS["default"];
+    leg.innerHTML += `<div class="leg-item"><div class="leg-sq" style="background:${color}"></div>${sk}</div>`;
+  });
+
+  const datasets = TREND_SKILLS.map(sk => ({
+    label: sk,
+    data: t[sk] || [],
+    borderColor: SKILL_COLORS[sk] || SKILL_COLORS["default"],
+    backgroundColor: "transparent",
+    tension: 0.35,
+    pointRadius: 3,
+    pointHoverRadius: 5,
+    borderWidth: 2,
+  }));
+
+  // Format labels as short month names
+  const labels = (t.labels || []).map(d => {
+    const dt = new Date(d);
+    return dt.toLocaleDateString("en-US", {month:"short", year:"2-digit"});
+  });
+
+  trendChart = new Chart(document.getElementById("trendChart"), {
+    type: "line",
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          mode: "index", intersect: false,
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: "rgba(255,255,255,0.04)" },
+          ticks: { font:{size:10}, color:"#4a5070", autoSkip:false, maxRotation:30 }
+        },
+        y: {
+          grid: { color: "rgba(255,255,255,0.04)" },
+          ticks: { font:{size:10}, color:"#4a5070", callback: v => v+"%" },
+          min: 0, max: 100,
+        }
+      }
+    }
+  });
+}
+
+function buildSalaryChart() {
+  const labels = DATA.salary_dist.map(d => d.bucket);
+  const values = DATA.salary_dist.map(d => d.count);
+
+  salaryChart = new Chart(document.getElementById("salaryChart"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: labels.map((_, i) => `rgba(79,142,247,${0.3 + i * 0.07})`),
+        borderColor: "rgba(79,142,247,0.6)",
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: { label: ctx => ` ${ctx.parsed.y.toLocaleString()} postings` }
+      }},
+      scales: {
+        x: { grid:{color:"rgba(255,255,255,0.04)"}, ticks:{font:{size:10},color:"#4a5070",maxRotation:30} },
+        y: { grid:{color:"rgba(255,255,255,0.04)"}, ticks:{font:{size:10},color:"#4a5070"} }
+      }
+    }
+  });
+}
+
+function buildRoleChart() {
+  const roles = DATA.roles.slice(0, 8);
+  const labels = roles.map(r => r.role);
+  const values = roles.map(r => r.count);
+
+  roleChart = new Chart(document.getElementById("roleChart"), {
+    type: "doughnut",
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: ROLE_COLORS,
+        borderColor: "#1a1d27",
+        borderWidth: 2,
+        hoverOffset: 4,
+      }]
+    },
+    options: {
+      responsive: false,
+      cutout: "68%",
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed.toLocaleString()}` }
+      }}
+    }
+  });
+
+  // Custom legend
+  const leg = document.getElementById("roleLegend");
+  roles.forEach((r, i) => {
+    leg.innerHTML += `<div style="display:flex;align-items:center;gap:6px">
+      <div style="width:8px;height:8px;border-radius:2px;background:${ROLE_COLORS[i]};flex-shrink:0"></div>
+      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.role} (${r.pct}%)</span>
+    </div>`;
+  });
+}
+
+loadData();
+</script>
+</body>
+</html>

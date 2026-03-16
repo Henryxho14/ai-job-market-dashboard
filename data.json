@@ -1,0 +1,954 @@
+{
+  "meta": {
+    "generated": "2026-03-16",
+    "total_postings": 3847,
+    "date_range": {
+      "start": "2025-09-17",
+      "end": "2026-03-15"
+    }
+  },
+  "metrics": {
+    "total_postings": 3847,
+    "posting_change": -5.7,
+    "avg_salary_k": 99,
+    "salary_change": 8.2,
+    "ai_skill_pct": 52.0,
+    "ai_skill_change": 31.4,
+    "remote_hybrid_pct": 65.2,
+    "remote_change": -9.1
+  },
+  "skill_freq": [
+    {
+      "skill": "SQL",
+      "count": 2931,
+      "pct": 76.2,
+      "is_ai": false
+    },
+    {
+      "skill": "Python",
+      "count": 2824,
+      "pct": 73.4,
+      "is_ai": false
+    },
+    {
+      "skill": "Communication",
+      "count": 2470,
+      "pct": 64.2,
+      "is_ai": false
+    },
+    {
+      "skill": "Tableau",
+      "count": 2166,
+      "pct": 56.3,
+      "is_ai": false
+    },
+    {
+      "skill": "Agile / Scrum",
+      "count": 2012,
+      "pct": 52.3,
+      "is_ai": false
+    },
+    {
+      "skill": "Excel",
+      "count": 1898,
+      "pct": 49.3,
+      "is_ai": false
+    },
+    {
+      "skill": "Data Visualization",
+      "count": 1838,
+      "pct": 47.8,
+      "is_ai": false
+    },
+    {
+      "skill": "Business Analysis",
+      "count": 1698,
+      "pct": 44.1,
+      "is_ai": false
+    },
+    {
+      "skill": "AWS",
+      "count": 1681,
+      "pct": 43.7,
+      "is_ai": false
+    },
+    {
+      "skill": "Power BI",
+      "count": 1521,
+      "pct": 39.5,
+      "is_ai": false
+    },
+    {
+      "skill": "Statistics",
+      "count": 1432,
+      "pct": 37.2,
+      "is_ai": false
+    },
+    {
+      "skill": "Machine Learning",
+      "count": 1362,
+      "pct": 35.4,
+      "is_ai": true
+    },
+    {
+      "skill": "ETL / Data Pipeline",
+      "count": 1181,
+      "pct": 30.7,
+      "is_ai": false
+    },
+    {
+      "skill": "Azure",
+      "count": 1179,
+      "pct": 30.6,
+      "is_ai": false
+    },
+    {
+      "skill": "Salesforce CRM",
+      "count": 1042,
+      "pct": 27.1,
+      "is_ai": false
+    },
+    {
+      "skill": "R",
+      "count": 1033,
+      "pct": 26.9,
+      "is_ai": false
+    },
+    {
+      "skill": "Google Cloud",
+      "count": 997,
+      "pct": 25.9,
+      "is_ai": false
+    },
+    {
+      "skill": "Snowflake",
+      "count": 928,
+      "pct": 24.1,
+      "is_ai": false
+    },
+    {
+      "skill": "Spark / PySpark",
+      "count": 778,
+      "pct": 20.2,
+      "is_ai": false
+    },
+    {
+      "skill": "LLM / GenAI",
+      "count": 615,
+      "pct": 16.0,
+      "is_ai": true
+    },
+    {
+      "skill": "dbt",
+      "count": 404,
+      "pct": 10.5,
+      "is_ai": false
+    },
+    {
+      "skill": "Prompt Engineering",
+      "count": 248,
+      "pct": 6.4,
+      "is_ai": true
+    },
+    {
+      "skill": "AI Governance",
+      "count": 138,
+      "pct": 3.6,
+      "is_ai": true
+    },
+    {
+      "skill": "RAG / Vector DBs",
+      "count": 115,
+      "pct": 3.0,
+      "is_ai": true
+    }
+  ],
+  "trend": {
+    "labels": [
+      "2025-09-01",
+      "2025-10-01",
+      "2025-11-01",
+      "2025-12-01",
+      "2026-01-01",
+      "2026-02-01",
+      "2026-03-01"
+    ],
+    "Python": [
+      73.6,
+      73.0,
+      71.1,
+      70.2,
+      74.7,
+      78.5,
+      73.6
+    ],
+    "SQL": [
+      73.0,
+      78.4,
+      75.9,
+      73.2,
+      76.3,
+      78.2,
+      77.7
+    ],
+    "LLM / GenAI": [
+      6.1,
+      7.6,
+      12.2,
+      17.5,
+      19.0,
+      23.4,
+      27.4
+    ],
+    "Tableau": [
+      51.4,
+      57.7,
+      58.9,
+      50.5,
+      58.2,
+      57.9,
+      58.5
+    ],
+    "Power BI": [
+      43.6,
+      34.5,
+      41.4,
+      40.9,
+      38.4,
+      39.2,
+      43.1
+    ],
+    "Prompt Engineering": [
+      1.4,
+      1.8,
+      1.6,
+      3.6,
+      10.8,
+      11.3,
+      18.6
+    ]
+  },
+  "companies": [
+    {
+      "company": "Salesforce",
+      "total": 358,
+      "avg_salary": 101,
+      "change_pct": -5.6
+    },
+    {
+      "company": "Cisco",
+      "total": 332,
+      "avg_salary": 99,
+      "change_pct": -17.7
+    },
+    {
+      "company": "Deloitte",
+      "total": 291,
+      "avg_salary": 93,
+      "change_pct": 6.5
+    },
+    {
+      "company": "Accenture",
+      "total": 282,
+      "avg_salary": 92,
+      "change_pct": 26.2
+    },
+    {
+      "company": "Oracle",
+      "total": 268,
+      "avg_salary": 99,
+      "change_pct": -24.1
+    },
+    {
+      "company": "ServiceNow",
+      "total": 261,
+      "avg_salary": 104,
+      "change_pct": 13.0
+    },
+    {
+      "company": "Apple",
+      "total": 231,
+      "avg_salary": 108,
+      "change_pct": -7.7
+    },
+    {
+      "company": "PwC",
+      "total": 224,
+      "avg_salary": 92,
+      "change_pct": -4.9
+    },
+    {
+      "company": "Google",
+      "total": 206,
+      "avg_salary": 112,
+      "change_pct": -14.3
+    },
+    {
+      "company": "KPMG",
+      "total": 179,
+      "avg_salary": 90,
+      "change_pct": 23.1
+    }
+  ],
+  "rising": [
+    {
+      "skill": "AI Governance",
+      "mentions": 138,
+      "now_pct": 9.2,
+      "change_pct": 140.8,
+      "is_ai": true
+    },
+    {
+      "skill": "RAG / Vector DBs",
+      "mentions": 115,
+      "now_pct": 6.6,
+      "change_pct": 134.5,
+      "is_ai": true
+    },
+    {
+      "skill": "Prompt Engineering",
+      "mentions": 248,
+      "now_pct": 15.0,
+      "change_pct": 41.5,
+      "is_ai": true
+    },
+    {
+      "skill": "LLM / GenAI",
+      "mentions": 615,
+      "now_pct": 24.8,
+      "change_pct": 18.8,
+      "is_ai": true
+    },
+    {
+      "skill": "Spark / PySpark",
+      "mentions": 778,
+      "now_pct": 22.3,
+      "change_pct": 9.9,
+      "is_ai": false
+    },
+    {
+      "skill": "Statistics",
+      "mentions": 1432,
+      "now_pct": 38.4,
+      "change_pct": 7.0,
+      "is_ai": false
+    },
+    {
+      "skill": "AWS",
+      "mentions": 1681,
+      "now_pct": 45.3,
+      "change_pct": 6.8,
+      "is_ai": false
+    },
+    {
+      "skill": "Power BI",
+      "mentions": 1521,
+      "now_pct": 41.6,
+      "change_pct": 6.5,
+      "is_ai": false
+    }
+  ],
+  "roles": [
+    {
+      "role": "Data Analyst",
+      "count": 817,
+      "pct": 21.2
+    },
+    {
+      "role": "Business Analyst",
+      "count": 653,
+      "pct": 17.0
+    },
+    {
+      "role": "Data Scientist",
+      "count": 557,
+      "pct": 14.5
+    },
+    {
+      "role": "IT Consultant",
+      "count": 484,
+      "pct": 12.6
+    },
+    {
+      "role": "Business Intelligence Analyst",
+      "count": 425,
+      "pct": 11.0
+    },
+    {
+      "role": "Data Engineer",
+      "count": 343,
+      "pct": 8.9
+    },
+    {
+      "role": "Machine Learning Engineer",
+      "count": 324,
+      "pct": 8.4
+    },
+    {
+      "role": "AI/ML Analyst",
+      "count": 244,
+      "pct": 6.3
+    }
+  ],
+  "work_modes": [
+    {
+      "mode": "Hybrid",
+      "count": 1694,
+      "pct": 44.0
+    },
+    {
+      "mode": "On-site",
+      "count": 1339,
+      "pct": 34.8
+    },
+    {
+      "mode": "Remote",
+      "count": 814,
+      "pct": 21.2
+    }
+  ],
+  "salary_dist": [
+    {
+      "bucket": "$50-70K",
+      "count": 73
+    },
+    {
+      "bucket": "$70-85K",
+      "count": 799
+    },
+    {
+      "bucket": "$85-100K",
+      "count": 1264
+    },
+    {
+      "bucket": "$100-115K",
+      "count": 851
+    },
+    {
+      "bucket": "$115-130K",
+      "count": 633
+    },
+    {
+      "bucket": "$130-145K",
+      "count": 203
+    },
+    {
+      "bucket": "$145K+",
+      "count": 24
+    }
+  ],
+  "categories": {
+    "all": {
+      "total": 3847,
+      "avg_salary_k": 99,
+      "ai_pct": 52.0,
+      "remote_pct": 65.2,
+      "skill_freq": [
+        {
+          "skill": "SQL",
+          "count": 2931,
+          "pct": 76.2
+        },
+        {
+          "skill": "Python",
+          "count": 2824,
+          "pct": 73.4
+        },
+        {
+          "skill": "Communication",
+          "count": 2470,
+          "pct": 64.2
+        },
+        {
+          "skill": "Tableau",
+          "count": 2166,
+          "pct": 56.3
+        },
+        {
+          "skill": "Agile / Scrum",
+          "count": 2012,
+          "pct": 52.3
+        },
+        {
+          "skill": "Excel",
+          "count": 1898,
+          "pct": 49.3
+        },
+        {
+          "skill": "Data Visualization",
+          "count": 1838,
+          "pct": 47.8
+        },
+        {
+          "skill": "Business Analysis",
+          "count": 1698,
+          "pct": 44.1
+        },
+        {
+          "skill": "AWS",
+          "count": 1681,
+          "pct": 43.7
+        },
+        {
+          "skill": "Power BI",
+          "count": 1521,
+          "pct": 39.5
+        },
+        {
+          "skill": "Statistics",
+          "count": 1432,
+          "pct": 37.2
+        },
+        {
+          "skill": "Machine Learning",
+          "count": 1362,
+          "pct": 35.4
+        },
+        {
+          "skill": "ETL / Data Pipeline",
+          "count": 1181,
+          "pct": 30.7
+        },
+        {
+          "skill": "Azure",
+          "count": 1179,
+          "pct": 30.6
+        },
+        {
+          "skill": "Salesforce CRM",
+          "count": 1042,
+          "pct": 27.1
+        },
+        {
+          "skill": "R",
+          "count": 1033,
+          "pct": 26.9
+        },
+        {
+          "skill": "Google Cloud",
+          "count": 997,
+          "pct": 25.9
+        },
+        {
+          "skill": "Snowflake",
+          "count": 928,
+          "pct": 24.1
+        },
+        {
+          "skill": "Spark / PySpark",
+          "count": 778,
+          "pct": 20.2
+        },
+        {
+          "skill": "LLM / GenAI",
+          "count": 615,
+          "pct": 16.0
+        },
+        {
+          "skill": "dbt",
+          "count": 404,
+          "pct": 10.5
+        },
+        {
+          "skill": "Prompt Engineering",
+          "count": 248,
+          "pct": 6.4
+        },
+        {
+          "skill": "AI Governance",
+          "count": 138,
+          "pct": 3.6
+        },
+        {
+          "skill": "RAG / Vector DBs",
+          "count": 115,
+          "pct": 3.0
+        }
+      ]
+    },
+    "data": {
+      "total": 2041,
+      "avg_salary_k": 106,
+      "ai_pct": 52.6,
+      "remote_pct": 64.8,
+      "skill_freq": [
+        {
+          "skill": "SQL",
+          "count": 1546,
+          "pct": 75.7
+        },
+        {
+          "skill": "Python",
+          "count": 1512,
+          "pct": 74.1
+        },
+        {
+          "skill": "Communication",
+          "count": 1329,
+          "pct": 65.1
+        },
+        {
+          "skill": "Tableau",
+          "count": 1134,
+          "pct": 55.6
+        },
+        {
+          "skill": "Agile / Scrum",
+          "count": 1076,
+          "pct": 52.7
+        },
+        {
+          "skill": "Excel",
+          "count": 1000,
+          "pct": 49.0
+        },
+        {
+          "skill": "Data Visualization",
+          "count": 975,
+          "pct": 47.8
+        },
+        {
+          "skill": "Business Analysis",
+          "count": 923,
+          "pct": 45.2
+        },
+        {
+          "skill": "AWS",
+          "count": 907,
+          "pct": 44.4
+        },
+        {
+          "skill": "Power BI",
+          "count": 824,
+          "pct": 40.4
+        },
+        {
+          "skill": "Machine Learning",
+          "count": 761,
+          "pct": 37.3
+        },
+        {
+          "skill": "Statistics",
+          "count": 757,
+          "pct": 37.1
+        },
+        {
+          "skill": "ETL / Data Pipeline",
+          "count": 622,
+          "pct": 30.5
+        },
+        {
+          "skill": "Azure",
+          "count": 604,
+          "pct": 29.6
+        },
+        {
+          "skill": "R",
+          "count": 543,
+          "pct": 26.6
+        },
+        {
+          "skill": "Salesforce CRM",
+          "count": 539,
+          "pct": 26.4
+        },
+        {
+          "skill": "Google Cloud",
+          "count": 525,
+          "pct": 25.7
+        },
+        {
+          "skill": "Snowflake",
+          "count": 486,
+          "pct": 23.8
+        },
+        {
+          "skill": "Spark / PySpark",
+          "count": 424,
+          "pct": 20.8
+        },
+        {
+          "skill": "LLM / GenAI",
+          "count": 320,
+          "pct": 15.7
+        },
+        {
+          "skill": "dbt",
+          "count": 208,
+          "pct": 10.2
+        },
+        {
+          "skill": "Prompt Engineering",
+          "count": 122,
+          "pct": 6.0
+        },
+        {
+          "skill": "AI Governance",
+          "count": 73,
+          "pct": 3.6
+        },
+        {
+          "skill": "RAG / Vector DBs",
+          "count": 55,
+          "pct": 2.7
+        }
+      ]
+    },
+    "analyst": {
+      "total": 2139,
+      "avg_salary_k": 89,
+      "ai_pct": 52.0,
+      "remote_pct": 65.6,
+      "skill_freq": [
+        {
+          "skill": "SQL",
+          "count": 1654,
+          "pct": 77.3
+        },
+        {
+          "skill": "Python",
+          "count": 1598,
+          "pct": 74.7
+        },
+        {
+          "skill": "Communication",
+          "count": 1356,
+          "pct": 63.4
+        },
+        {
+          "skill": "Tableau",
+          "count": 1225,
+          "pct": 57.3
+        },
+        {
+          "skill": "Agile / Scrum",
+          "count": 1103,
+          "pct": 51.6
+        },
+        {
+          "skill": "Data Visualization",
+          "count": 1034,
+          "pct": 48.3
+        },
+        {
+          "skill": "Excel",
+          "count": 1028,
+          "pct": 48.1
+        },
+        {
+          "skill": "Business Analysis",
+          "count": 943,
+          "pct": 44.1
+        },
+        {
+          "skill": "AWS",
+          "count": 941,
+          "pct": 44.0
+        },
+        {
+          "skill": "Power BI",
+          "count": 880,
+          "pct": 41.1
+        },
+        {
+          "skill": "Statistics",
+          "count": 797,
+          "pct": 37.3
+        },
+        {
+          "skill": "Machine Learning",
+          "count": 757,
+          "pct": 35.4
+        },
+        {
+          "skill": "ETL / Data Pipeline",
+          "count": 666,
+          "pct": 31.1
+        },
+        {
+          "skill": "Azure",
+          "count": 646,
+          "pct": 30.2
+        },
+        {
+          "skill": "Salesforce CRM",
+          "count": 584,
+          "pct": 27.3
+        },
+        {
+          "skill": "R",
+          "count": 581,
+          "pct": 27.2
+        },
+        {
+          "skill": "Google Cloud",
+          "count": 560,
+          "pct": 26.2
+        },
+        {
+          "skill": "Snowflake",
+          "count": 509,
+          "pct": 23.8
+        },
+        {
+          "skill": "Spark / PySpark",
+          "count": 407,
+          "pct": 19.0
+        },
+        {
+          "skill": "LLM / GenAI",
+          "count": 332,
+          "pct": 15.5
+        },
+        {
+          "skill": "dbt",
+          "count": 227,
+          "pct": 10.6
+        },
+        {
+          "skill": "Prompt Engineering",
+          "count": 140,
+          "pct": 6.5
+        },
+        {
+          "skill": "AI Governance",
+          "count": 78,
+          "pct": 3.6
+        },
+        {
+          "skill": "RAG / Vector DBs",
+          "count": 63,
+          "pct": 2.9
+        }
+      ]
+    },
+    "consulting": {
+      "total": 976,
+      "avg_salary_k": 92,
+      "ai_pct": 51.0,
+      "remote_pct": 65.4,
+      "skill_freq": [
+        {
+          "skill": "SQL",
+          "count": 755,
+          "pct": 77.4
+        },
+        {
+          "skill": "Python",
+          "count": 722,
+          "pct": 74.0
+        },
+        {
+          "skill": "Communication",
+          "count": 607,
+          "pct": 62.2
+        },
+        {
+          "skill": "Tableau",
+          "count": 554,
+          "pct": 56.8
+        },
+        {
+          "skill": "Agile / Scrum",
+          "count": 515,
+          "pct": 52.8
+        },
+        {
+          "skill": "Excel",
+          "count": 485,
+          "pct": 49.7
+        },
+        {
+          "skill": "Data Visualization",
+          "count": 459,
+          "pct": 47.0
+        },
+        {
+          "skill": "Business Analysis",
+          "count": 422,
+          "pct": 43.2
+        },
+        {
+          "skill": "AWS",
+          "count": 420,
+          "pct": 43.0
+        },
+        {
+          "skill": "Power BI",
+          "count": 384,
+          "pct": 39.3
+        },
+        {
+          "skill": "Statistics",
+          "count": 371,
+          "pct": 38.0
+        },
+        {
+          "skill": "Machine Learning",
+          "count": 336,
+          "pct": 34.4
+        },
+        {
+          "skill": "ETL / Data Pipeline",
+          "count": 332,
+          "pct": 34.0
+        },
+        {
+          "skill": "Azure",
+          "count": 302,
+          "pct": 30.9
+        },
+        {
+          "skill": "Salesforce CRM",
+          "count": 264,
+          "pct": 27.0
+        },
+        {
+          "skill": "Snowflake",
+          "count": 245,
+          "pct": 25.1
+        },
+        {
+          "skill": "R",
+          "count": 242,
+          "pct": 24.8
+        },
+        {
+          "skill": "Google Cloud",
+          "count": 241,
+          "pct": 24.7
+        },
+        {
+          "skill": "Spark / PySpark",
+          "count": 186,
+          "pct": 19.1
+        },
+        {
+          "skill": "LLM / GenAI",
+          "count": 154,
+          "pct": 15.8
+        },
+        {
+          "skill": "dbt",
+          "count": 99,
+          "pct": 10.1
+        },
+        {
+          "skill": "Prompt Engineering",
+          "count": 68,
+          "pct": 7.0
+        },
+        {
+          "skill": "AI Governance",
+          "count": 29,
+          "pct": 3.0
+        },
+        {
+          "skill": "RAG / Vector DBs",
+          "count": 24,
+          "pct": 2.5
+        }
+      ]
+    }
+  }
+}
